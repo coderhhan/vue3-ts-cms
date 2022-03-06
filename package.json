@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint",
     "prettier": "prettier --write .",
     "prepare": "husky install",
     "commit": "cz"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "core-js": "^3.6.5",
     "vue": "^3.2.4",
     "vue-router": "^4.0.13",
