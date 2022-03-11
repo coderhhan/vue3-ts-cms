@@ -1,6 +1,5 @@
 <template>
   <div>首页</div>
-  {{ env }}
   {{ $store.state.name }}
 </template>
 
