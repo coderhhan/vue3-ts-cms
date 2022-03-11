@@ -1,14 +1,25 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { HhRequestConfig, HhRequestInterceptors } from './type'
+import { ElLoading } from 'element-plus'
+import 'element-plus/es/components/loading/style/css'
+// import { ILoadingInstance } from 'element-plus/lib/components/loading/src'
+interface HYData<T> {
+  data: T
+  returnCode: string
+  success: boolean
+}
 
 class HhRequest {
   instance: AxiosInstance
   interceptors?: HhRequestInterceptors
+  isShowLoading: boolean
+  laoding?: any
 
   constructor(config: HhRequestConfig) {
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
+    this.isShowLoading = config.isShowLoading ?? true
 
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
@@ -22,6 +33,11 @@ class HhRequest {
     //global
     this.instance.interceptors.request.use(
       (config) => {
+        this.isShowLoading &&
+          (this.laoding = ElLoading.service({
+            lock: true,
+            text: '请求中'
+          }))
         return config
       },
       (err) => {
@@ -30,26 +46,42 @@ class HhRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
+        this.isShowLoading &&
+          setTimeout(() => {
+            this.laoding?.close()
+          }, 1000)
         return res
       },
       (err) => {
+        this.isShowLoading &&
+          setTimeout(() => {
+            this.laoding?.close()
+          }, 1000)
         return err
       }
     )
   }
 
-  request<T>(config: HhRequestConfig): Promise<T> {
-    if (config.interceptors?.requestInterceptor) {
-      config = config.interceptors.requestInterceptor(config)
-    }
+  request<T>(config: HhRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config)
+      }
+      if (config.isShowLoading === false) {
+        this.isShowLoading = config.isShowLoading
+      }
       this.instance
-        .request(config)
+        .request<any, T>(config)
         .then((res) => {
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res)
+          }
           resolve(res)
+          this.isShowLoading = true
         })
         .catch((err) => {
           reject(err)
+          this.isShowLoading = true
         })
     })
   }

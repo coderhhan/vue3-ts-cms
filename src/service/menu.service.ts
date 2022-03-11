@@ -1,5 +1,8 @@
 import requestInstance from './index'
 
-requestInstance.get({
-  url: '/menu'
-})
+export function menu() {
+  return requestInstance.request({
+    url: '/menu',
+    isShowLoading: true
+  })
+}
