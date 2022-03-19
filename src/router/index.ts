@@ -14,6 +14,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('@/views/login/login.vue')
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/register.vue')
   }
 ]
 
@@ -22,4 +26,9 @@ const router = createRouter({
   history: createWebHashHistory()
 })
 
+router.beforeEach((to) => {
+  if (to.path === '/main') {
+    return '/login'
+  }
+})
 export default router

@@ -85,6 +85,10 @@ class HhRequest {
         })
     })
   }
+
+  post<T>(config: HhRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'post' })
+  }
 }
 
 export default HhRequest
