@@ -7,12 +7,16 @@
 <script>
 import { defineComponent } from 'vue'
 import { ref } from 'vue'
-import { menu } from '@/service/menu.service'
+import { login } from '@/service/menu.service'
 export default defineComponent({
   setup() {
     const env = ref(process.env.VUE_APP_API)
     console.log(process.env.VUE_APP_API)
-    menu().then((res) => {
+    const query = {
+      name: 'coderwhy',
+      password: '123456'
+    }
+    login(query).then((res) => {
       console.log(res)
     })
     return {

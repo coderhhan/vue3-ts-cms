@@ -6,3 +6,11 @@ export function menu() {
     isShowLoading: true
   })
 }
+
+export function login(data: any) {
+  return requestInstance.post({
+    url: '/login',
+    isShowLoading: true,
+    data
+  })
+}

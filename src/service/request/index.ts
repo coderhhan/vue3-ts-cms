@@ -80,6 +80,7 @@ class HhRequest {
           this.isShowLoading = true
         })
         .catch((err) => {
+          console.log(err)
           reject(err)
           this.isShowLoading = true
         })

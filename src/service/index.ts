@@ -2,6 +2,7 @@ import HhRequest from './request'
 
 export default new HhRequest({
   baseURL: process.env.VUE_APP_API,
+  // baseURL: '/api',
   interceptors: {
     requestInterceptor: (config) => {
       return config

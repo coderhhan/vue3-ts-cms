@@ -22,7 +22,6 @@
 import LoginAccount from './login-account.vue'
 import LoginPhone from './login-phone.vue'
 import { defineComponent, ref } from 'vue'
-import { menu } from '@/service/menu.service'
 export default defineComponent({
   components: {
     LoginAccount,
@@ -30,16 +29,13 @@ export default defineComponent({
   },
   setup() {
     const tabActive = ref('account')
-    menu().then((res) => {
-      console.log(res)
-    })
-
+    const isRememberPassword = ref<boolean>(false)
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
-    const phoneRef = ref<InstanceType<typeof LoginAccount>>()
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
     const handleLogin = () => {
       switch (tabActive.value) {
         case 'account': {
-          accountRef.value?.loginAction()
+          accountRef.value?.loginAction(isRememberPassword.value)
           break
         }
         case 'phone': {

@@ -7,8 +7,12 @@
       status-icon
       class="demo-ruleForm"
     >
-      <el-form-item label="账号" prop="name">
-        <el-input v-model="accountFrom.name" type="name" autocomplete="off"></el-input>
+      <el-form-item label="账号" prop="userAccount">
+        <el-input
+          v-model="accountFrom.userAccount"
+          type="userAccount"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input v-model="accountFrom.password" type="password" autocomplete="off"></el-input>
@@ -21,18 +25,26 @@
 import { ElForm } from 'element-plus/lib/components'
 import { defineComponent, ref, reactive } from 'vue'
 import { rules } from '../config/login-account'
+import localCache from '@/utils/cache'
 export default defineComponent({
   name: '',
   setup() {
     const accountFrom = reactive({
-      name: '',
+      userAccount: '',
       password: ''
     })
 
     const accountFormRef = ref<InstanceType<typeof ElForm>>()
     console.log(accountFormRef)
 
-    const loginAction = () => {
+    const loginAction = (isRememberPassword: boolean) => {
+      accountFormRef.value?.validate((validate) => {
+        if (!validate) return
+        if (isRememberPassword) {
+          localCache.setCache('userAccount', accountFrom.userAccount)
+          localCache.setCache('userAccount', accountFrom.userAccount)
+        }
+      })
       console.log('账号登录')
     }
     return {

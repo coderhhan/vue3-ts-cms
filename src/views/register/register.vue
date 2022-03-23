@@ -38,6 +38,7 @@ import { registerRules } from './config/register-rules'
 import { sendCode } from '@/service/login/login.service'
 
 import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'
 import { ElForm } from 'element-plus/lib/components'
 
 export default defineComponent({
@@ -68,6 +69,8 @@ export default defineComponent({
           }
         })
         .catch((err) => {
+          debugger
+          console.log
           ElMessage({
             showClose: true,
             message: err.message,
