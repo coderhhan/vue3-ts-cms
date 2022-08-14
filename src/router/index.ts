@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import type { RouteRecordRaw } from 'vue-router'
-
+import localCache from '@/utils/cache'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -26,9 +26,13 @@ const router = createRouter({
   history: createWebHashHistory()
 })
 
-router.beforeEach((to) => {
-  if (to.path === '/main') {
-    return '/login'
+router.beforeEach((to, from, next) => {
+  const token = localCache.getCache('token')
+  if (to.path !== '/login') {
+    if (!token) {
+      return '/main'
+    }
   }
+  next()
 })
 export default router

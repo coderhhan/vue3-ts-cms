@@ -5,19 +5,19 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = {
   outputDir: './build',
-  // publicPath: './',
-  // devServer: {
-  //   proxy: {
-  //     '^/api': {
-  //       //target: 'http://152.136.185.210:5000',
-  //       target: 'localhost:8000',
-  //       changeOrigin: true,
-  //       pathRewrite: {
-  //         '^/api': ''
-  //       }
-  //     }
-  //   }
-  // },
+  publicPath: './',
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://152.136.185.210:5000',
+        // target: 'localhost:8000',
+        // changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  },
   configureWebpack: {
     plugins: [
       AutoImport({

@@ -13,8 +13,13 @@ export interface sendCodeQuery {
   verifyCode: string
 }
 
-export interface ResponeData {
+export interface ResponeData<T = any> {
   code: number
   message: string
-  data: any
+  data: T
+}
+
+export interface loginData {
+  name: string
+  password: string
 }

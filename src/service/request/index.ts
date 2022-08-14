@@ -72,16 +72,16 @@ class HhRequest {
       }
       this.instance
         .request<any, T>(config)
-        .then((res) => {
+        .then((res: any) => {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          resolve(res)
+          resolve(res.data)
           this.isShowLoading = true
         })
         .catch((err) => {
           console.log(err)
-          reject(err)
+          reject(err.data)
           this.isShowLoading = true
         })
     })
@@ -89,6 +89,9 @@ class HhRequest {
 
   post<T>(config: HhRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'post' })
+  }
+  get<T>(config: HhRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'get' })
   }
 }
 

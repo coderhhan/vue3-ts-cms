@@ -39,7 +39,7 @@ export default defineComponent({
           break
         }
         case 'phone': {
-          phoneRef.value?.loginAction()
+          // phoneRef.value?.loginAction()
           break
         }
       }
@@ -47,6 +47,9 @@ export default defineComponent({
 
     return {
       tabActive,
+      accountRef,
+      phoneRef,
+
       handleLogin
     }
   }

@@ -1,13 +1,13 @@
 <template>
   <div>首页333</div>
   {{ env }}
-  {{ $store.state.name }}
+  {{ $store.loginModule.state.token }}
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { ref } from 'vue'
-import { login } from '@/service/menu.service'
+// import { login } from '@/service/menu.service'
 export default defineComponent({
   setup() {
     const env = ref(process.env.VUE_APP_API)
@@ -16,9 +16,9 @@ export default defineComponent({
       name: 'coderwhy',
       password: '123456'
     }
-    login(query).then((res) => {
-      console.log(res)
-    })
+    // login(query).then((res) => {
+    //   console.log(res)
+    // })
     return {
       env
     }
