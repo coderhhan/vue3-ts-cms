@@ -27,7 +27,6 @@ import { defineComponent, ref, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { rules } from '../config/login-account'
 import localCache from '@/utils/cache'
-import { login } from '@/service/login/login.service'
 export default defineComponent({
   name: '',
   setup() {

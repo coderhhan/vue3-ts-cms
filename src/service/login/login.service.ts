@@ -8,7 +8,7 @@ enum LoginAPI {
   sendCode = '/login/SendCode',
   login = '/login',
   userInfo = '/users/',
-  menu = '/menu/'
+  UserMenus = '/role/'
 }
 export const loginAccount = function (data: accountLoginData): Promise<ResponeData> {
   return requestInstance.post<ResponeData>({
@@ -47,7 +47,7 @@ export const userInfo = function (id: string): Promise<ResponeData> {
 
 export const getMenuByRoleId = function (id: string): Promise<ResponeData> {
   return requestInstance.get<ResponeData>({
-    url: LoginAPI.menu + id,
+    url: LoginAPI.UserMenus + id + '/menu',
     isShowLoading: false
   })
 }

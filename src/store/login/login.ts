@@ -53,6 +53,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       userInfo && commit('setUserInfo', userInfo)
       const menu = localCache.getCache('menu')
       token && commit('setMenuData', menu)
+      console.log(menu)
     }
   }
 }
