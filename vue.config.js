@@ -2,7 +2,8 @@ const path = require('path')
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
-
+const IconsResolver = require('unplugin-icons/resolver')
+const Icons = require('unplugin-icons/webpack')
 module.exports = {
   outputDir: './build',
   publicPath: './',
@@ -21,10 +22,30 @@ module.exports = {
   configureWebpack: {
     plugins: [
       AutoImport({
-        resolvers: [ElementPlusResolver()]
+        // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+        // imports: ['vue'],
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动导入图标组件
+          // IconsResolver({
+          //   prefix: 'Icon'
+          // })
+          IconsResolver({ prefix: 'Icon' })
+          //   IconsResolver()
+        ]
       }),
       Components({
-        resolvers: [ElementPlusResolver()]
+        resolvers: [
+          ElementPlusResolver(),
+          // // 自动注册图标组件
+          // IconsResolver()
+          IconsResolver({ componentPrefix: 'icon' })
+        ]
+      }),
+      // Icons({ compiler: 'vue3', scale: 1, defaultClass: 'inline-block', autoInstall: true })
+      Icons({
+        compiler: 'vue3',
+        autoInstall: true
       })
     ],
     resolve: {

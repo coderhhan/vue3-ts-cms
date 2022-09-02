@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img src="~@/assets/logo.png" alt="" />
-      <span class="title">vue3+ts</span>
+      <span v-show="!collapse" class="title">vue3+ts</span>
     </div>
     <el-menu
       default-active="2"
@@ -10,14 +10,10 @@
       active-text-color="#ffd04b"
       background-color="#545c64"
       text-color="#fff"
+      :collapse="collapse"
     >
       <template v-for="item in userMenus" :key="item.id">
-        <!-- <template v-if="item.type === 1"> -->
         <nav-menu-item :item="item" />
-        <!-- </template>
-        <template v-else-if="item.type === 2">
-          <nav-menu-item :item="item" />
-        </template> -->
       </template>
     </el-menu>
   </div>
@@ -26,19 +22,30 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
-import NavMenuItem from './nav-menu-item.vue'
-import navMenuItem from './nav-menu-item.vue'
+import { useRouter } from 'vue-router'
+// import navMenuItem from './nav-menu-item.vue'
 export default defineComponent({
-  components: { navMenuItem },
+  // components: { navMenuItem },
   name: 'HelloWorld',
   props: {
-    NavMenuItem
+    collapse: {
+      type: Boolean,
+      default: false
+    }
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
     const userMenus = computed(() => store.state.loginModule.menu)
+    const handleMenuItemClick = (item: any) => {
+      console.log('--------')
+      router.push({
+        path: item.url ?? '/not-found'
+      })
+    }
     return {
-      userMenus
+      userMenus,
+      handleMenuItemClick
     }
   }
 })
@@ -60,13 +67,13 @@ export default defineComponent({
     img {
       height: 20px;
       width: 20px;
-      margin-right: 10px;
     }
 
     .title {
       font-size: 16px;
       font-weight: 700;
       color: black;
+      margin-left: 10px;
     }
   }
   .el-menu-vertical {
@@ -83,5 +90,9 @@ export default defineComponent({
       }
     }
   }
+}
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 100%;
+  height: calc(100% - 48px);
 }
 </style>

@@ -4,6 +4,7 @@ import { ILoginState } from './type'
 import { login, userInfo, getMenuByRoleId } from '@/service/login/login.service'
 import localCache from '@/utils/cache'
 import router from '@/router'
+import { mapMenusToRoutes } from '@/utils/map-menu'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
@@ -22,6 +23,12 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     setMenuData(state, menu) {
       state.menu = menu
+      //映射路由
+      const routes = mapMenusToRoutes(menu)
+      //添加映射的路由
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   },
   actions: {
