@@ -1,11 +1,10 @@
 <template>
   <div class="page-search">
-    {{ searchConfig }}
     <h-form v-model="formData" v-bind="searchConfig">
       <template #header> 高级搜索 </template>
       <template #footer>
-        <el-button>重置</el-button>
-        <el-button type="primary">搜索</el-button>
+        <el-button @click="handleReset">重置</el-button>
+        <el-button type="primary" @click="handleSearch">搜索</el-button>
       </template>
     </h-form>
   </div>
@@ -14,6 +13,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import HForm from '@/components/HForm'
+import { HFormItem } from '@/components/HForm/type/index'
 export default defineComponent({
   name: 'page-search',
   components: {
@@ -27,13 +27,25 @@ export default defineComponent({
       }
     }
   },
-  setup() {
-    const formData = ref({
-      name: '111',
-      age: '10'
+  setup(props, { emit }) {
+    const originData: any = {}
+    props.searchConfig?.formItems.forEach((config: HFormItem) => {
+      originData[config.field] = ''
     })
+    const formData = ref(originData)
+
+    const handleReset = () => {
+      props.searchConfig?.formItems.forEach((config: HFormItem) => {
+        formData.value[config.field] = ''
+      })
+    }
+    const handleSearch = () => {
+      console.log('搜索')
+    }
     return {
-      formData
+      formData,
+      handleReset,
+      handleSearch
     }
   }
 })

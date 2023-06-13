@@ -11,12 +11,17 @@
 import { defineComponent, reactive, ref } from 'vue'
 import PageSearch from '@/components/page-search/index'
 import { searchConfig } from './config/search.config'
+
+import store, { useStore } from '@/store'
 export default defineComponent({
   name: 'user',
   components: {
     PageSearch
   },
   setup() {
+    const sotre = useStore()
+    store.dispatch('systemModule/getList')
+
     return { searchConfig }
   }
 })
