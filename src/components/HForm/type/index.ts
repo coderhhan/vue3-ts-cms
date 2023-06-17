@@ -17,4 +17,5 @@ export interface HForm {
   labelWidth?: string
   colLayout?: any
   itemLayout: any
+  collapseLayout?: any
 }

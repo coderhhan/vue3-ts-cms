@@ -27,6 +27,7 @@ export default defineComponent({
       }
     }
   },
+  emits: ['resetBtnClick', 'searchBtnClick'],
   setup(props, { emit }) {
     const originData: any = {}
     props.searchConfig?.formItems.forEach((config: HFormItem) => {
@@ -38,9 +39,11 @@ export default defineComponent({
       props.searchConfig?.formItems.forEach((config: HFormItem) => {
         formData.value[config.field] = ''
       })
+      emit('resetBtnClick')
     }
     const handleSearch = () => {
       console.log('搜索')
+      emit('searchBtnClick', formData.value)
     }
     return {
       formData,

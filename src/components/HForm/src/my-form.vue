@@ -3,7 +3,7 @@
     <div class="header">
       <slot name="header" />
     </div>
-    <el-form :model="form" label-width="120px">
+    <el-form :model="formData" label-width="120px">
       <el-row>
         <template v-for="formItem in formItems" :key="formItem.label">
           <el-col v-bind="collapseLayout">
