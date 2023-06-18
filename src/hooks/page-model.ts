@@ -13,6 +13,7 @@ export function usePageModel(createCb?: CallBackFun, editCb?: CallBackFun): any[
   }
 
   const handleEditUserClick = (item: any) => {
+    debugger
     defaultInfo.value = { ...item }
     if (pageModelRef.value) {
       pageModelRef.value.dialogVisible = true

@@ -7,6 +7,10 @@
       v-bind="contentConfig"
       v-model:page="pageInfo"
     >
+      <template #status="scope">
+        <el-button v-if="scope.row.enable === 1">启用</el-button>
+        <el-button v-if="scope.row.enable === 0">禁用</el-button>
+      </template>
       <template #action="scope">
         <el-button @click="handleClick(scope.row, 'edit')">编辑</el-button>
         <el-button @click="handleClick(scope.row, 'delete')">删除</el-button>
@@ -69,6 +73,8 @@ export default defineComponent({
           break
         }
         case 'edit': {
+          debugger
+          console.log(row)
           emit('editUserClick', row)
           break
         }

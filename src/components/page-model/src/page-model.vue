@@ -1,6 +1,7 @@
 <template>
   <div class="page-model">
-    <el-dialog v-model="dialogVisible" title="Tips" width="30%">
+    <el-dialog v-model="dialogVisible" :destroy-on-close="true" title="Tips" width="30%">
+      {{ defaultInfo }}
       <h-form v-model="formData" v-bind="modelConfig"> </h-form>
       <template #footer>
         <span class="dialog-footer">
@@ -13,10 +14,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onBeforeMount, onMounted, PropType } from 'vue'
-
+import { defineComponent, ref, watch } from 'vue'
 import HForm from '@/components/HForm'
-import { HFormItem, HForm as HFormType } from '@/components/HForm/type/index'
+import { HFormItem } from '@/components/HForm/type/index'
 
 export default defineComponent({
   name: 'page-model',
@@ -37,15 +37,23 @@ export default defineComponent({
       }
     }
   },
-  setup(props) {
+  setup(props: any) {
     const dialogVisible = ref(false)
-    const originData: any = {}
-
+    const originData: any = { ...props.defaultInfo }
     props.modelConfig?.formItems.forEach((config: HFormItem) => {
       originData[config.field] = ''
     })
     const formData = ref(originData)
-
+    watch(
+      () => props.defaultInfo,
+      (value) => {
+        debugger 
+        formData.value = { ...value }
+      },
+      {
+        deep: true
+      }
+    )
     return {
       formData,
       dialogVisible

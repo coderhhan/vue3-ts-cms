@@ -3,7 +3,7 @@ import { Module } from 'vuex'
 import { IRootState } from '../type'
 import { ISystemState } from './type'
 
-import { getPageListData } from '@/service/system/system.service'
+import { getPageListData,insertItem } from '@/service/system/system.service'
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -22,7 +22,22 @@ const systemModule: Module<ISystemState, IRootState> = {
         console.log(playload)
         commit('changeList', { type: 'users', data: res.data })
       })
-    }
+    },
+    //新增
+    insertItem({ dispatch }, playload) {
+      const { pageName, query } = playload
+      const url = `/${pageName}`
+      insertItem(url,query)
+      .then(res => {
+        if(res.code == 200) {
+          dispatch
+        }
+      })
+    },
+    // //新增
+    // updateItem({ commit }, playload) {
+
+    // }
   },
   mutations: {
     changeList(state, playload) {
@@ -40,7 +55,8 @@ const systemModule: Module<ISystemState, IRootState> = {
       return function (pageName: string) {
         return (state as any)[`${pageName}Count`]
       }
-    }
+    },
+
   }
 }
 

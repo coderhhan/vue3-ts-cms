@@ -9,3 +9,10 @@ export function getPageListData(url: string, queryInfo: any) {
     data: queryInfo
   })
 }
+
+export function insertItem(url: string, data: any) {
+  return requestInstance.post<ResponeData>({
+    url: url,
+    data
+  })
+}
