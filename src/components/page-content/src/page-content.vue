@@ -51,6 +51,14 @@ export default defineComponent({
 
     const getPageData = (query: any = {}) => {
       sotre.dispatch('systemModule/getList', {
+        pageName: 'department',
+        query: {
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
+          ...query.name
+        }
+      })
+      sotre.dispatch('systemModule/getList', {
         pageName: props.pageName,
         query: {
           offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,

@@ -1,12 +1,12 @@
 <template>
   <div class="page-model">
     <el-dialog v-model="dialogVisible" :destroy-on-close="true" title="Tips" width="30%">
-      {{ defaultInfo }}
+      {{ formData }}
       <h-form v-model="formData" v-bind="modelConfig"> </h-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false"> Confirm </el-button>
+          <el-button type="primary" @click="handleConfirm"> Confirm </el-button>
         </span>
       </template>
     </el-dialog>
@@ -17,13 +17,17 @@
 import { defineComponent, ref, watch } from 'vue'
 import HForm from '@/components/HForm'
 import { HFormItem } from '@/components/HForm/type/index'
-
+import { useStore } from '@/store/index'
 export default defineComponent({
   name: 'page-model',
   components: {
     HForm
   },
   props: {
+    pageName: {
+      type: String,
+      required: true
+    },
     modelConfig: {
       type: Object,
       default: () => {
@@ -38,6 +42,7 @@ export default defineComponent({
     }
   },
   setup(props: any) {
+    const sotre = useStore()
     const dialogVisible = ref(false)
     const originData: any = { ...props.defaultInfo }
     props.modelConfig?.formItems.forEach((config: HFormItem) => {
@@ -47,16 +52,24 @@ export default defineComponent({
     watch(
       () => props.defaultInfo,
       (value) => {
-        debugger 
         formData.value = { ...value }
       },
       {
         deep: true
       }
     )
+
+    const handleConfirm = () => {
+      sotre.dispatch('systemModule/insertItem', {
+        pageName: props.pageName,
+        query: { ...formData.value }
+      })
+    }
+
     return {
       formData,
-      dialogVisible
+      dialogVisible,
+      handleConfirm
     }
   }
 })

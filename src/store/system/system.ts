@@ -1,16 +1,17 @@
 import { Module } from 'vuex'
-
 import { IRootState } from '../type'
 import { ISystemState } from './type'
 
-import { getPageListData,insertItem } from '@/service/system/system.service'
+import { getPageListData, insertItem } from '@/service/system/system.service'
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
   state() {
     return {
       usersList: [],
-      usersCount: 0
+      usersCount: 0,
+      departmentList: [],
+      departmentCount: 0
     }
   },
 
@@ -20,20 +21,19 @@ const systemModule: Module<ISystemState, IRootState> = {
       const url = `/${pageName}/list`
       getPageListData(url, query).then((res) => {
         console.log(playload)
-        commit('changeList', { type: 'users', data: res.data })
+        commit('changeList', { type: pageName, data: res.data })
       })
     },
     //新增
     insertItem({ dispatch }, playload) {
       const { pageName, query } = playload
       const url = `/${pageName}`
-      insertItem(url,query)
-      .then(res => {
-        if(res.code == 200) {
-          dispatch
+      insertItem(url, query).then((res) => {
+        if (res.code == 200) {
+          dispatch('getList', { offset: 0, size: 10 })
         }
       })
-    },
+    }
     // //新增
     // updateItem({ commit }, playload) {
 
@@ -55,8 +55,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       return function (pageName: string) {
         return (state as any)[`${pageName}Count`]
       }
-    },
-
+    }
   }
 }
 

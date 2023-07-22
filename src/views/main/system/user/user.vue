@@ -14,17 +14,19 @@
       @addUserClick="handleAddUserClick"
       @editUserClick="handleEditUserClick"
     />
-    <page-model ref="pageModelRef" :defaultInfo="defaultInfo" :modelConfig="modelConfig" />
+    <page-model
+      ref="pageModelRef"
+      pageName="users"
+      :defaultInfo="defaultInfo"
+      :modelConfig="modelConfig"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { useStore } from '@/store'
-
-import PageSearch from '@/components/page-search/index'
-import PageContent from '@/components/page-content/index'
-import PageModel from '@/components/page-model/index'
+<script lang="ts" setup name="user">
+import PageSearch from './components/page-search'
+import PageContent from './components/page-content'
+import PageModel from './components/page-model'
 
 import { searchConfig } from './config/search.config'
 import { contentConfig } from './config/content.config'
@@ -32,36 +34,11 @@ import { modelConfig } from './config/model.config'
 
 import { usePageSearch } from '@/hooks/page-search'
 import { usePageModel } from '@/hooks/page-model'
-export default defineComponent({
-  name: 'user',
-  components: {
-    PageSearch,
-    PageContent,
-    PageModel
-  },
-  setup() {
-    const sotre = useStore()
 
-    const [pageContentRef, handleResetClick, handleSearchClick] = usePageSearch()
+const [pageContentRef, handleResetClick, handleSearchClick] = usePageSearch()
 
-    const [pageModelRef, defaultInfo, handleAddUserClick, handleEditUserClick] = usePageModel()
-    // store.dispatch('systemModule/getList')
-
-    return {
-      pageContentRef,
-      handleResetClick,
-      handleSearchClick,
-      pageModelRef,
-      defaultInfo,
-      handleAddUserClick,
-      handleEditUserClick,
-
-      searchConfig,
-      contentConfig,
-      modelConfig
-    }
-  }
-})
+const [pageModelRef, defaultInfo, handleAddUserClick, handleEditUserClick] = usePageModel()
+// store.dispatch('systemModule/getList')
 </script>
 <style scoped lang="less">
 .user-content {

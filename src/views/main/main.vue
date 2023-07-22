@@ -18,28 +18,16 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup lang="ts" name="main">
 import { ref } from 'vue'
 import NavMenu from '@/components/nav-menu'
 import NavHeader from '@/components/nav-header'
-export default defineComponent({
-  components: {
-    NavMenu,
-    NavHeader
-  },
-  name: 'main',
-  setup() {
-    const isCollapse = ref(false)
-    const changeCollapse = function (fold) {
-      isCollapse.value = fold
-    }
-    return {
-      isCollapse,
-      changeCollapse
-    }
-  }
-})
+
+const isCollapse = ref(false)
+
+const changeCollapse = function (fold: boolean) {
+  isCollapse.value = fold
+}
 </script>
 
 <style lang="less" scoped>
